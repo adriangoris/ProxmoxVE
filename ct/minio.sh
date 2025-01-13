@@ -36,53 +36,19 @@ function update_script() {
       3>&1 1>&2 2>&3
     )
     exit_status=$?
-      if [ $exit_status == 1 ]; then
-        clear
-        exit-script
-      fi
-      header_info
-      case $CHOICE in
-      1)
-        apk update && apk upgrade
-        exit
-        ;;
-      esac
+    if [ $exit_status == 1 ]; then
+      clear
+      exit-script
+    fi
+    header_info
+    case $CHOICE in
+    1)
+      apk update && apk upgrade
+      exit
+      ;;
+    esac
   done
 
-  install_minio(){
-    apk add minio --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
-  }
-
-  update_config_variables(){
-    sed -i 's/^MINIO_ROOT_USER=.*/MINIO_ROOT_USER="admin"/' /etc/conf.d/minio
-    sed -i 's/^MINIO_ROOT_PASSWORD=.*/MINIO_ROOT_PASSWORD="$PW"/' /etc/conf.d/minio
-    sed -i 's/^MINIO_ADDRESS=.*/MINIO_ADDRESS="0.0.0.0:9000"/' /etc/conf.d/minio
-    sed -i 's/^MINIO_CONSOLE_ADDRESS=.*/MINIO_CONSOLE_ADDRESS="0.0.0.0:9001"/' /etc/conf.d/minio
-    sed -i 's/^MINIO_BROWSER=.*/MINIO_BROWSER="on"/' /etc/conf.d/minio
-  }
-
-  stop_mino() {
-    if which rc-service 2>/dev/null >/dev/null; then
-      echo "Stopping MinIO..."
-      rc-service minio stop
-    else
-      echo "Skipped stopping MinIO, no rc-service found"
-    fi
-  }
-
-  start_mino() {
-    if which rc-service 2>/dev/null >/dev/null; then
-      echo "Starting MinIO..."
-      rc-service minio start
-    else
-      echo "Skipped starting MinIO, no rc-service found"
-    fi
-  }
-
-  install_minio
-  stop_mino
-  update_config_variables
-  start_mino
 
   echo "Done!"
   exit
