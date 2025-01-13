@@ -25,7 +25,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing MinIO"
 $STD apk add minio --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 sed -i 's/^MINIO_ROOT_USER=.*/MINIO_ROOT_USER="admin"/' /etc/conf.d/minio
-sed -i 's/^MINIO_ROOT_PASSWORD=.*/MINIO_ROOT_PASSWORD="$PW"/' /etc/conf.d/minio
+sed -i 's/^MINIO_ROOT_PASSWORD=.*/MINIO_ROOT_PASSWORD="admin"/' /etc/conf.d/minio
 sed -i 's/^MINIO_ADDRESS=.*/MINIO_ADDRESS="0.0.0.0:9000"/' /etc/conf.d/minio
 sed -i 's/^MINIO_CONSOLE_ADDRESS=.*/MINIO_CONSOLE_ADDRESS="0.0.0.0:9001"/' /etc/conf.d/minio
 sed -i 's/^MINIO_BROWSER=.*/MINIO_BROWSER="on"/' /etc/conf.d/minio
